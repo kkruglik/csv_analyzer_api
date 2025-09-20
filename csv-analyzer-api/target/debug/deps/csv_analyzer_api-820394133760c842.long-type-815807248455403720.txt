@@ -1,1 +1,0 @@
-fn() -> impl std::future::Future<Output = CsvModel> {csv_get_handler}: axum::handler::Handler<_, _>

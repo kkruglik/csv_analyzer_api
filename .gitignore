@@ -1,8 +1,8 @@
 # Rust artifacts
-/target/
+**/target/
 **/*.rs.bk
 *.pdb
-Cargo.lock
+**/Cargo.lock
 
 # Bruno API client files
 csv-processor/

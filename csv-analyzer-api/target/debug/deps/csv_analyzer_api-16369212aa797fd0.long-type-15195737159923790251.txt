@@ -1,2 +1,0 @@
-fn(axum::Json<csv_analyzer_api::models::CsvModel>) -> impl std::future::Future<Output = std::string::String> {csv_analyzer_api::handlers::csv_post_handler}
-fn(axum::Json<csv_analyzer_api::models::CsvModel>) -> impl std::future::Future<Output = std::string::String> {csv_analyzer_api::handlers::csv_post_handler}: axum::handler::Handler<_, _>
