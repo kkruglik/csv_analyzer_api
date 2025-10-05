@@ -1,3 +1,5 @@
+mod requests;
 mod responses;
 
-pub use responses::CsvModel;
+pub use requests::CsvSearchRequest;
+pub use responses::{CsvAnalyzeResponse, CsvModel};
