@@ -7,6 +7,13 @@ pub struct CsvModel {
 }
 
 #[derive(serde::Serialize, serde::Deserialize)]
+pub struct CsvUploadResponse {
+    pub uid: String,
+    pub filename: String,
+    pub upload_datetime: String,
+}
+
+#[derive(serde::Serialize, serde::Deserialize)]
 pub struct CsvAnalyzeResponse {
     pub filename: String,
     pub upload_datetime: String,

@@ -34,9 +34,46 @@ The API will be available at `http://0.0.0.0:8000`
 
 ## API Endpoints
 
-### `POST /api/v1/analyze`
+### `POST /api/v1/csv/upload`
 
-Upload and analyze a CSV file.
+Upload a CSV file and get a unique ID (file is stored in database).
+
+**Request:**
+- Content-Type: `multipart/form-data`
+- Body: CSV file
+
+**Example:**
+
+```bash
+curl -X POST http://localhost:8000/api/v1/csv/upload \
+  -F "file=@sample.csv"
+```
+
+**Response:**
+
+```json
+{
+  "uid": "6a126a9a-b3f8-44b9-8a12-b5a2e6ade68b",
+  "filename": "sample.csv",
+  "upload_datetime": "2025-10-10 14:30:45.123456 UTC"
+}
+```
+
+### `GET /api/v1/csv/analyze/{uid}`
+
+Analyze a previously uploaded CSV file by UID. Results are cached in the database.
+
+**Example:**
+
+```bash
+curl http://localhost:8000/api/v1/csv/analyze/6a126a9a-b3f8-44b9-8a12-b5a2e6ade68b
+```
+
+**Response:** See full analysis response below.
+
+### `POST /api/v1/analyze` (Legacy)
+
+Upload and analyze a CSV file in one request.
 
 **Request:**
 - Content-Type: `multipart/form-data`
@@ -185,20 +222,33 @@ curl -X POST http://localhost:8000/api/v1/analyze
 ## Technology Stack
 
 - **Framework**: Axum 0.8
+- **Database**: SQLx with SQLite
 - **CSV Processing**: csv_processor 0.1.10
 - **Async Runtime**: Tokio
 - **Serialization**: Serde + serde_json
+
+## Database
+
+Uses SQLite with automatic migrations on startup. Database file: `sqlite.db`
+
+**Tables:**
+- `csv_files` - Stores uploaded CSV files with raw content
+- `csv_analyze_responses` - Stores analysis results (cached by file_id)
+
+The database is automatically created and migrated on first run.
 
 ## Project Structure
 
 ```
 csv-analyzer-api/
 ├── src/
+│   ├── db/           # Database layer (repository, models)
 │   ├── handlers/     # Request handlers
 │   ├── models/       # Request/response models
 │   ├── routers/      # API routing
 │   ├── lib.rs
 │   └── main.rs
+├── migrations/       # SQLx migrations
 ├── Cargo.toml
 └── README.md
 ```

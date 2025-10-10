@@ -4,6 +4,14 @@
 *.pdb
 **/Cargo.lock
 
+# Database files
+*.db
+*.db-shm
+*.db-wal
+
+# Sample CSV files
+sample.csv
+
 # Bruno API client files
 csv-processor/
 *.bru
